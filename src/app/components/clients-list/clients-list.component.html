@@ -1,0 +1,12 @@
+<div class="list-container">
+  <mat-list *ngIf="clients" class="client-list-item">
+    <mat-list-item 
+      class="item-container"
+      *ngFor="let client of clients" 
+      (click)="selectedClient(client)"
+      [ngClass] = "{'selected':selected === client}">
+        <client-item [client]="client">
+        </client-item>
+    </mat-list-item>
+  </mat-list>
+</div>

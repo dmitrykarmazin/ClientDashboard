@@ -1,0 +1,23 @@
+
+.cliet-preview {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  padding:5px 0;
+  //overflow: hidden;
+  &:hover(){
+    background-color: beige;
+  }
+  img {
+
+    width: 55px;
+    height: 55px;
+    margin: 0 5px;
+  }
+  .client-desc {
+    margin: 0 20px;
+  }
+}
+.cliet-preview>* {
+  align-self: center;
+}

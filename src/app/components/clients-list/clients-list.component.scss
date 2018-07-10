@@ -1,0 +1,22 @@
+.list-container{
+  height: 100%;
+  width: 100%;
+}
+.client-list-item{
+  height: auto;
+}
+.item-container{
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:not(.selected):hover {
+    background-color: darken(white, 5);
+  }
+}
+.mat-list .mat-list-item{
+  height: auto !important;
+}
+.selected{
+  background-color:#2B3131;
+  color:white;
+  transition: all 0.35s ease-in-out;
+}
