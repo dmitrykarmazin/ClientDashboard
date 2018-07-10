@@ -6,7 +6,9 @@
   width: 300px;
   padding: 20px 0;
   background-color: #fff;
-  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 .main{
   height: 100%;
