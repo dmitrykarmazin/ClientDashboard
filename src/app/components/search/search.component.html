@@ -1,5 +1,7 @@
 <form class="myForm">
   <mat-form-field class="full-with">
-    <input matInput placeholder="Type client name">
+    <input matInput
+    (keyup)="SearchService.query($event.target.value)"
+     placeholder="Type client name" >
   </mat-form-field>
 </form>
