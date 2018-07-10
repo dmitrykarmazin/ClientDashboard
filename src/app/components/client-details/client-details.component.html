@@ -1,0 +1,24 @@
+<div class="client-details-container" *ngIf="!!client&&opened">
+  <div class="avatar">
+    <img [src]="client.general.avatar" alt="Photo">
+  </div>
+  <div class="details-info">
+    <h2 class="mat-title">{{client.general.firstName}} {{client.general.lastName}}</h2>
+    <h3 class="mat-subheading-2">{{client.job.title}} - {{client.job.company}}</h3>
+    <p class="contact mat-subheading-1">
+      email:  {{client.contact.email}}
+      <br> phone:  {{client.contact.phone}}
+      <br>
+    </p>
+    <p class="address mat-body-1">
+      {{client.address.street}}
+      <br> {{client.address.city}}
+      <br> {{client.address.zipCode}}
+      <br> {{client.address.country}}
+      <br>
+    </p>
+  </div>
+</div>
+
+  
+  

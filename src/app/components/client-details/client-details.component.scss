@@ -1,0 +1,14 @@
+:host{
+  width:100%;
+}
+.client-details-container{
+  display: flex;
+  width:100%;
+  .avatar{
+    img{
+      height: 128px;
+      width: 128px;
+      padding: 20px;
+    }
+  }
+}
