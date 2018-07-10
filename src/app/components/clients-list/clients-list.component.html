@@ -2,7 +2,7 @@
   <mat-list *ngIf="clients" class="client-list-item">
     <mat-list-item 
       class="item-container"
-      *ngFor="let client of clients" 
+      *ngFor="let client of clients|search:temp" 
       (click)="selectedClient(client)"
       [ngClass] = "{'selected':selected === client}">
         <client-item [client]="client">

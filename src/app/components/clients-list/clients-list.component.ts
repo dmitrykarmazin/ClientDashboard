@@ -1,7 +1,10 @@
-import { ClientsDataService } from '../../services/clients-data.service';
+import { SearchService } from './../../services/search.service';
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../model/Client';
 
+import { DataService } from './../../services/data.service';
+import { ClientsDataService } from '../../services/clients-data.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,11 +15,22 @@ import { Client } from '../../model/Client';
 export class ClientsListComponent implements OnInit {
   clients: Client[];
   selected: Client;
+  private subscription: Subscription;
+  temp:string;
 
-  constructor(private ClientsService: ClientsDataService) {}
+  constructor(private client:DataService, private ClientsService: ClientsDataService,
+    private SearchService: SearchService) {
+  }
 
   ngOnInit() {
     this.getClient();
+    this.subscription = this.SearchService.searchQuary$
+        .debounceTime(300)
+        .distinctUntilChanged()
+        .subscribe(query=>{
+          console.log(query);
+          this.temp = query;
+        })
   }
 
   getClient(): void {
@@ -25,8 +39,15 @@ export class ClientsListComponent implements OnInit {
       this.clients = cl;
     });
   }
-  selectedClient(data: Client){
-    this.selected =  data;
+
+  selectedClient(data: Client):void{
+    this.selected = data;
+    console.table(data);
+    this.client.sentDetails(data);
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();  
   }
 
 }
