@@ -1,0 +1,23 @@
+.viewport {
+  height: 100vh;
+}
+
+.xl-sitebar {
+  width: 300px;
+  padding: 20px 0;
+  background-color: #fff;
+  
+}
+.main{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  .client-d-container{
+    display:flex;
+    height: 100%;
+    padding:25px 20px;
+    color:white;
+    overflow-y: hidden;
+    background-color: #2B3131;
+  }
+}
