@@ -1,31 +1,30 @@
 import { Client } from '../../model/Client';
+// tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs';
 import { DataService } from './../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: "client-details",
-  templateUrl: "./client-details.component.html",
-  styleUrls: ["./client-details.component.scss"]
+  selector: 'app-client-details',
+  templateUrl: './client-details.component.html',
+  styleUrls: ['./client-details.component.scss']
 })
 export class ClientDetailsComponent implements OnInit {
   private subscription: Subscription;
-  client: Client = null;
-  opened: boolean = false;
+  client: Client = {};
+  opened = false;
 
-  constructor(private DataService: DataService) {}
+  constructor(private DataClientService: DataService) {}
 
   ngOnInit() {
-    this.subscription = this.DataService.ClientData$.subscribe(c => {
+    this.subscription = this.DataClientService.ClientData$.subscribe(c => {
       this.client = c;
-      console.log(this.client);
-      this.opened = this.client === {} ? false : true;  
-      console.log(this.opened)
-      //setTimeout(()=>this.opened=false,3000)
+      this.opened = this.client === {} ? false : true;
     });
   }
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
-    this.subscription.unsubscribe;
-  }
+    // tslint:disable-next-line:no-unused-expression
+    this.subscription.unsubscribe; }
 }

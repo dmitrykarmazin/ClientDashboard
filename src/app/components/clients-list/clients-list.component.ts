@@ -4,50 +4,49 @@ import { Client } from '../../model/Client';
 
 import { DataService } from './../../services/data.service';
 import { ClientsDataService } from '../../services/clients-data.service';
+// tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: "clients-list",
-  templateUrl: "./clients-list.component.html",
-  styleUrls: ["./clients-list.component.scss"]
+  selector: 'app-clients-list',
+  templateUrl: './clients-list.component.html',
+  styleUrls: ['./clients-list.component.scss']
 })
 export class ClientsListComponent implements OnInit {
-  clients: Client[];
+  clients: Client[] = [];
   selected: Client;
   private subscription: Subscription;
-  temp:string;
+  temp: string;
 
-  constructor(private client:DataService, private ClientsService: ClientsDataService,
-    private SearchService: SearchService) {
+  constructor(private ClientService: DataService, private ClientsService: ClientsDataService,
+    private SearchIService: SearchService) {
   }
 
   ngOnInit() {
     this.getClient();
-    this.subscription = this.SearchService.searchQuary$
-        .debounceTime(300)
-        .distinctUntilChanged()
-        .subscribe(query=>{
-          console.log(query);
-          this.temp = query;
-        })
+    this.subscription = this.SearchIService.searchQuary$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe(query => {
+        this.temp = query;
+      });
   }
 
   getClient(): void {
     this.ClientsService.getClientsData().subscribe(cl => {
-      console.log(cl);
       this.clients = cl;
     });
   }
 
-  selectedClient(data: Client):void{
+  selectedClient(data: Client): void {
     this.selected = data;
     console.table(data);
-    this.client.sentDetails(data);
+    this.ClientService.sentDetails(data);
   }
 
-  ngOnDestroy(){
-    this.subscription.unsubscribe();  
-  }
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    this.subscription.unsubscribe(); }
 
 }

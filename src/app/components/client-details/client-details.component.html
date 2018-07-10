@@ -1,21 +1,36 @@
-<div class="client-details-container" *ngIf="!!client&&opened">
-  <div class="avatar">
+<div class="client-details-container" *ngIf="client&&opened"
+
+>
+  <div class="avatar" 
+    *ngIf="client.general && client.general.avatar">
     <img [src]="client.general.avatar" alt="Photo">
   </div>
   <div class="details-info">
-    <h2 class="mat-title">{{client.general.firstName}} {{client.general.lastName}}</h2>
-    <h3 class="mat-subheading-2">{{client.job.title}} - {{client.job.company}}</h3>
-    <p class="contact mat-subheading-1">
+    <h2 class="mat-title"
+    *ngIf="client.general && client.general.firstName && client.general.lastName">
+      {{client.general.firstName}} {{client.general.lastName}}</h2>
+    <h3 class="mat-subheading-2" 
+ *ngIf="client.job && client.job.title && client.job.company">
+      {{client.job.title}} - {{client.job.company}}</h3>
+    <p class="contact mat-subheading-1"
+      *ngIf="client.contact && client.contact.email && client.contact.phone">
       email:  {{client.contact.email}}
       <br> phone:  {{client.contact.phone}}
       <br>
     </p>
     <p class="address mat-body-1">
-      {{client.address.street}}
-      <br> {{client.address.city}}
-      <br> {{client.address.zipCode}}
-      <br> {{client.address.country}}
-      <br>
+      <span *ngIf="client.address&&client.address.street">
+         {{client.address.street}}
+      </span> <br>
+      <span *ngIf="client.address&&client.address.city">
+        {{client.address.city}}
+      </span> <br>
+      <span *ngIf="client.address&&client.address.zipCode">
+        {{client.address.zipCode}}
+      </span> <br>
+      <span *ngIf="client.address&&client.address.country">
+        {{client.address.country}}
+      </span> <br>
     </p>
   </div>
 </div>

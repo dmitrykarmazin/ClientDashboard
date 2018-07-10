@@ -5,11 +5,11 @@
       *ngFor="let client of clients|search:temp" 
       (click)="selectedClient(client)"
       [ngClass] = "{'selected':selected === client}">
-        <client-item [client]="client">
-        </client-item>
+        <app-client-item [client]="client">
+        </app-client-item>
     </mat-list-item>
   </mat-list>
-  <div class="error-message" *ngIf="!!clients.length">
+  <div class="error-message" *ngIf="clients.length == 0">
       <p>No matches found! Try again.</p>
   </div>
 </div>
