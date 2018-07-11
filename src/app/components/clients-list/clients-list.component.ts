@@ -34,10 +34,10 @@ export class ClientsListComponent implements OnInit {
   }
   ngOnInit() {
     this.initData();
-    this.clientsOb$.subscribe(data => {
-      this.clients = data;
-      console.log(this.clients);
-    });
+      this.clientsOb$.subscribe(data => {
+        this.clients = data;
+        console.log(this.clients, data);
+      });
     // console.log(this.clients);
   }
 
