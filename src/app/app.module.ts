@@ -22,6 +22,9 @@ import { SearchService } from './services/search.service';
 import { ClientDetailsComponent } from './components/client-details/client-details.component';
 import { SearchPipe } from './pipes/search.pipe';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/clients/reducer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +43,8 @@ import { SearchPipe } from './pipes/search.pipe';
     MatInputModule,
     MatListModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    StoreModule.forRoot(reducer, {})
   ],
   providers: [ClientsDataService, DataService, SearchService],
   bootstrap: [AppComponent]
