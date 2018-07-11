@@ -1,8 +1,7 @@
-<form class="myForm">
+<form class="myForm" ngForm="myform">
   <mat-form-field class="full-with">
     <mat-icon matSuffix color="primary">search</mat-icon>
-      <input matInput
-      [formControl] = "query"
+      <input matInput [formControl]="searchField"
       placeholder="Type client name">
   </mat-form-field>
 </form>

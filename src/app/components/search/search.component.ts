@@ -1,47 +1,31 @@
-import { Observable } from 'rxjs/Observable';
+import * as Actions from '../../store/clients/actions';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SearchService } from '../../services/search.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../store/clients/reducer';
 import { FormControl } from '@angular/forms';
-import { switchMap, debounceTime } from 'rxjs/operators';
-import { map } from 'rxjs/operator/map';
-// import 'rxjs/add/operator/debounceTime';
-// import 'rxjs/add/operator/do';
-// import 'rxjs/add/operator/switch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
+import { State } from '../../model/ClientState';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  // @ViewChild('input') query: ElementRef;
+  searchField: FormControl;
 
-  query =  new FormControl('');
   constructor(
-    private store: Store<fromRoot.State>,
-    private QueryService: SearchService
+    private store: Store<State>
   ) {}
   ngOnInit() {
-    console.log(this.query);
-    this.query.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(() => this.QueryService.query(this.query.value)))
-      .subscribe();
-    // this.query.valueChanges
-    // // .debounceTime(300)
-    // .switch()
-    // .map(t => console.log(t))
-    // .switchMap(() => this.QueryService.query(this.query.value))
-    // .subscribe();
+    this.searchField = new FormControl();
+    this.searchField.valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe(i => this.store.dispatch(new Actions.SearchClient(i)));
   }
 }
 
 
-  // input$ = Observable.
-  //           fromEvent(this.query.nativeElement, 'keyup').debounceTime(300)
-  //           .distinctUntilChanged()
-  //           .do(text => this.QueryService.query(this.query.nativeElement.value))
-  //           .subscribe();

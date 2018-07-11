@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action , Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Client } from '../../model/Client';
 
 export const SEARCHCLIENT = 'Search Client';

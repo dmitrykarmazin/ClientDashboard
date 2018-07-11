@@ -1,44 +1,45 @@
+import { getClients, getclientQuery } from './../../store/clients/reducer';
 import { Client } from './../../model/Client';
 import { Observable } from 'rxjs/Observable';
 import { SearchService } from './../../services/search.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ClientsDataService } from '../../services/clients-data.service';
 // tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs';
-import { Store, Action, State } from '@ngrx/store';
+import { Store, Action, select } from '@ngrx/store';
 import * as fromRoot from '../../store/clients/reducer';
+import * as seceltors from '../../store/clients/selectors';
 import * as Actions from '../../store/clients/actions';
-
+// import { AppState } from '../../store/clients/state';
+import { State } from '../../model/ClientState';
 
 @Component({
   selector: 'app-clients-list',
   templateUrl: './clients-list.component.html',
-  styleUrls: ['./clients-list.component.scss']
+  styleUrls: ['./clients-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsListComponent implements OnInit {
-  clientsOb$: Observable<Client[]>;
+  clients$: Observable<Client[]>;
   selected: Client;
-  clients: Client[] = [];
+  // clients: Client[] = [];
   private subscription: Subscription;
   temp$: Observable<string>;
 
   constructor(
     private ClientsService: ClientsDataService,
-    private SearchIService: SearchService,
-    private store: Store<fromRoot.State>
+    private store: Store<State>
   ) {
-    this.clientsOb$ = this.store.select(fromRoot.getClients);
-    this.temp$ = this.store.select(fromRoot.getclientQuery);
+    this.clients$ = this.store.pipe(select(seceltors.getClients));
+    this.temp$ = this.store.pipe(select(seceltors.getQuery));
     // this.selected = store.select(state => state.selectedClient);
   }
   ngOnInit() {
     this.initData();
-      this.clientsOb$.subscribe(data => {
-        this.clients = data;
-        console.log(this.clients, data);
-      });
-    // console.log(this.clients);
+    // this.clients$
+    // .store.pipe(select(fromRoot.getClients)).subscribe(i => console.log(i));
+    // this.temp$ = this.store.select('fromRoot.getclientQuery')
   }
 
   selectedClient(data: Client): void {
