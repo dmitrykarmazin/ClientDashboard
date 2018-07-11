@@ -37,20 +37,15 @@ export class ClientsListComponent implements OnInit {
   }
   ngOnInit() {
     this.initData();
-    // this.clients$
-    // .store.pipe(select(fromRoot.getClients)).subscribe(i => console.log(i));
-    // this.temp$ = this.store.select('fromRoot.getclientQuery')
   }
 
   selectedClient(data: Client): void {
     this.selected = data;
-    console.table(data);
     this.store.dispatch(new Actions.SelectClient(data));
   }
 
   initData(): void {
     this.ClientsService.getClientsData().subscribe(data => {
-      console.log(data);
       this.store.dispatch(new Actions.FetchClient(data));
     });
   }
