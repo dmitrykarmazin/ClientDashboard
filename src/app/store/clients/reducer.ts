@@ -10,7 +10,7 @@ export interface State {
 
 const initialState: State = {
   clientQuery: '',
-  selectedClient: null,
+  selectedClient: {},
   clients: []
 };
 
@@ -38,4 +38,10 @@ export function reducer(state = initialState, action: ClientActions.Actions): St
   }
 
 }
+
+export const getClients = (state: State) => state.clients;
+
+export const getclientQuery = (state: State) => state.clientQuery;
+
+export const getSelectedClient = (state: State) => state.selectedClient;
 
