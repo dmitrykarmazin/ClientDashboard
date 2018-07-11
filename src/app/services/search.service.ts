@@ -1,17 +1,17 @@
 import { Observable } from 'rxjs/Observable';
-// tslint:disable-next-line:import-blacklist
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../store/clients/reducer';
+import * as Actions from '../store/clients/actions';
 
 @Injectable()
 export class SearchService {
-  private searchQuary: BehaviorSubject<string> = new BehaviorSubject('');
-  searchQuary$: Observable<string> = this.searchQuary.asObservable();
+  constructor(private store: Store<fromRoot.State>) {}
 
-  constructor() {}
-
-  query(QueryText: string): void {
-    this.searchQuary.next(QueryText);
+  query(QueryText$: Observable<string>): Observable<string> {
+    return QueryText$.do
+    (text =>
+      this.store.dispatch(new Actions.SearchClient(text))
+    );
   }
 }

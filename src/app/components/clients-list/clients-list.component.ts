@@ -1,11 +1,14 @@
+import { Client } from './../../model/Client';
+import { Observable } from 'rxjs/Observable';
 import { SearchService } from './../../services/search.service';
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../../model/Client';
 
-import { DataService } from './../../services/data.service';
 import { ClientsDataService } from '../../services/clients-data.service';
 // tslint:disable-next-line:import-blacklist
 import { Subscription } from 'rxjs';
+import { Store, Action, State } from '@ngrx/store';
+import * as fromRoot from '../../store/clients/reducer';
+import * as Actions from '../../store/clients/actions';
 
 
 @Component({
@@ -14,39 +17,40 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./clients-list.component.scss']
 })
 export class ClientsListComponent implements OnInit {
-  clients: Client[] = [];
+  clientsOb$: Observable<Client[]>;
   selected: Client;
+  clients: Client[] = [];
   private subscription: Subscription;
-  temp: string;
+  temp$: Observable<string>;
 
-  constructor(private ClientService: DataService, private ClientsService: ClientsDataService,
-    private SearchIService: SearchService) {
+  constructor(
+    private ClientsService: ClientsDataService,
+    private SearchIService: SearchService,
+    private store: Store<fromRoot.State>
+  ) {
+    this.clientsOb$ = this.store.select(fromRoot.getClients);
+    this.temp$ = this.store.select(fromRoot.getclientQuery);
+    // this.selected = store.select(state => state.selectedClient);
   }
-
   ngOnInit() {
-    this.getClient();
-    this.subscription = this.SearchIService.searchQuary$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .subscribe(query => {
-        this.temp = query;
-      });
-  }
-
-  getClient(): void {
-    this.ClientsService.getClientsData().subscribe(cl => {
-      this.clients = cl;
+    this.initData();
+    this.clientsOb$.subscribe(data => {
+      this.clients = data;
+      console.log(this.clients);
     });
+    // console.log(this.clients);
   }
 
   selectedClient(data: Client): void {
     this.selected = data;
     console.table(data);
-    this.ClientService.sentDetails(data);
+    this.store.dispatch(new Actions.SelectClient(data));
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnDestroy() {
-    this.subscription.unsubscribe(); }
-
+  initData(): void {
+    this.ClientsService.getClientsData().subscribe(data => {
+      console.log(data);
+      this.store.dispatch(new Actions.FetchClient(data));
+    });
+  }
 }

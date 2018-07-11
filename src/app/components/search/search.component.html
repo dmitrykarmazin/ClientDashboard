@@ -1,8 +1,8 @@
 <form class="myForm">
   <mat-form-field class="full-with">
     <mat-icon matSuffix color="primary">search</mat-icon>
-    <input matInput
-     (keyup)="QueryService.query($event.target.value)"
- placeholder="Type client name" >
+      <input matInput
+      [formControl] = "query"
+      placeholder="Type client name">
   </mat-form-field>
 </form>
