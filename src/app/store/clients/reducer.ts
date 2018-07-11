@@ -3,7 +3,7 @@ import { State } from '../../model/ClientState';
 
 const initialState: State = {
   clientQuery: '',
-  selectedClient: null,
+  selectedClient: {},
   clients: []
 };
 

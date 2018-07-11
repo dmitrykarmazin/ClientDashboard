@@ -1,6 +1,4 @@
-<div class="client-details-container" *ngIf="client&&opened"
-
->
+<div class="client-details-container" *ngIf="clientOb$|async; let client">
   <div class="avatar" 
     *ngIf="client.general && client.general.avatar">
     <img [src]="client.general.avatar" alt="Photo">

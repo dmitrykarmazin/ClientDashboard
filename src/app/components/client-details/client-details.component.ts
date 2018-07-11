@@ -1,33 +1,24 @@
 import { Client } from '../../model/Client';
 // tslint:disable-next-line:import-blacklist
 import { Subscription, Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { Store, Action } from '@ngrx/store';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Store, Action, select } from '@ngrx/store';
 import * as fromRoot from '../../store/clients/reducer';
-
+import * as selectors from '../../store/clients/selectors';
+import { State } from '../../model/ClientState';
 
 @Component({
   selector: 'app-client-details',
   templateUrl: './client-details.component.html',
-  styleUrls: ['./client-details.component.scss']
+  styleUrls: ['./client-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientDetailsComponent implements OnInit {
-  private subscription: Subscription;
-  client: Observable<Client>;
-  opened = true;
+  clientOb$: Observable<Client>;
 
-  constructor(private store: Store<fromRoot.State>) {
-    this.client = this.store.select(fromRoot.getSelectedClient);
+  constructor(private store: Store<State>) {
+    this.clientOb$ = this.store.pipe(select(selectors.getSelectedClient));
   }
   ngOnInit() {
-    // this.subscription = this.DataClientService.ClientData$.subscribe(c => {
-    //   this.client = c;
-    //   this.opened = this.client === {} ? false : true;
-    // });
-  }
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnDestroy() {
-    // tslint:disable-next-line:no-unused-expression
-    // this.subscription.unsubscribe; }
   }
 }
