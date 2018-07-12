@@ -11,9 +11,10 @@ export class SearchPipe implements PipeTransform {
     if (!query) { return items; }
     query = query.toLowerCase();
     return items.filter( item => {
-      const str = item.general.firstName.toLowerCase();
-      return str.includes(query);
+      return Object.values(item)
+        .map(v =>  Object.values(v))
+        .reduce((a, b) => a.concat(b))
+        .some((i: string ) => i.toLowerCase().includes(query));
     });
   }
-
 }
